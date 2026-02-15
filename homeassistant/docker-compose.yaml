@@ -4,7 +4,7 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - /config:/config
+      - ./config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
@@ -14,3 +14,22 @@ services:
       - "5353:5353"   # mDNS/Bonjour discovery
     environment:
       TZ: Europe/Amsterdam
+      # Explicitly disable supervisor mode to avoid errors
+      DISABLE_JEMALLOC: true
+      # Prevent supervisor-related integrations from loading
+      SUPERVISOR: ""
+      # Container mode flags
+      HASSIO: ""
+      HOMEASSISTANT_CONTAINER: "1"
+    network_mode: bridge
+    # Add labels for better container management
+    labels:
+      - "com.docker.compose.service=homeassistant"
+      - "homeassistant=true"
+    # Add health check to monitor container status
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123/api/", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s

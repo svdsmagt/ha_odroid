@@ -13,7 +13,7 @@ services:
       - WG_DEFAULT_DNS=10.0.0.1
       - WG_ALLOWED_IPS=192.168.178.0/24, 10.0.0.0/24, 0.0.0.0/0
     volumes:
-      - ./wg-easy:/etc/wireguard
+      - ./config:/etc/wireguard
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"

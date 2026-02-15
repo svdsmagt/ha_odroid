@@ -11,7 +11,7 @@ services:
     privileged: true
     ports:
       - "8123:8123"   # Home Assistant Web GUI
-      - "5353:5353"   # mDNS/Bonjour discovery
+      # - "5353:5353"   # mDNS/Bonjour discovery
     environment:
       TZ: Europe/Amsterdam
       # Explicitly disable supervisor mode to avoid errors
@@ -23,6 +23,10 @@ services:
       HOMEASSISTANT_CONTAINER: "1"
       # Reduce internal logging to save space
       HASS_LOG_LEVEL: "warning"
+      # Database and history control
+      RECORDER_DB_URL: "sqlite:////config/home-assistant_v2.db"
+      # Force smaller database commits
+      RECORDER_COMMIT_INTERVAL: "30"
     network_mode: bridge
     # Add labels for better container management
     labels:
@@ -34,10 +38,3 @@ services:
       options:
         max-size: "10m"      # Maximum 10MB per log file
         max-file: "2"        # Keep only 2 log files (20MB total)
-    # Add health check to monitor container status
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8123/api/", "||", "exit", "1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 120s

@@ -21,3 +21,8 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"      # Maximum 10MB per log file
+        max-file: "2"        # Keep only 2 log files (20MB total)

@@ -21,11 +21,19 @@ services:
       # Container mode flags
       HASSIO: ""
       HOMEASSISTANT_CONTAINER: "1"
+      # Reduce internal logging to save space
+      HASS_LOG_LEVEL: "warning"
     network_mode: bridge
     # Add labels for better container management
     labels:
       - "com.docker.compose.service=homeassistant"
       - "homeassistant=true"
+    # Limit logging to save space on eMMC
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"      # Maximum 10MB per log file
+        max-file: "2"        # Keep only 2 log files (20MB total)
     # Add health check to monitor container status
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8123/api/", "||", "exit", "1"]

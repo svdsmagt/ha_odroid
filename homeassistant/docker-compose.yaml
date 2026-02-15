@@ -1,0 +1,16 @@
+# https://www.home-assistant.io/installation/alternative/
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8123:8123"   # Home Assistant Web GUI
+      - "5353:5353"   # mDNS/Bonjour discovery
+    environment:
+      TZ: Europe/Amsterdam

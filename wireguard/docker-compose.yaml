@@ -7,7 +7,7 @@ services:
       - SYS_MODULE
     environment:
       - WG_HOST=10.0.0.200
-      - PASSWORD_HASH=$$2a$$12$$LKawpSOfaS0YofcbqCrKBOyBTK61EGI6CjKzYGknQKTCa/D8nqchi
+      - PASSWORD_HASH=$$2y$$12$$PNsepUKoVauksZ64bIWiPeadl6A/jNPIlF.Ob7nicmDl/XjsYbB8y
       - WG_PORT=51820
       - WG_DEFAULT_ADDRESS=10.10.0.x
       - WG_DEFAULT_DNS=10.0.0.1

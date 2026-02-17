@@ -9,9 +9,7 @@ services:
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
     privileged: true
-    ports:
-      - "8123:8123"   # Home Assistant Web GUI
-      # - "5353:5353"   # mDNS/Bonjour discovery
+    network_mode: host
     environment:
       TZ: Europe/Amsterdam
       # Explicitly disable supervisor mode to avoid errors
@@ -27,7 +25,6 @@ services:
       RECORDER_DB_URL: "sqlite:////config/home-assistant_v2.db"
       # Force smaller database commits
       RECORDER_COMMIT_INTERVAL: "30"
-    network_mode: bridge
     # Add labels for better container management
     labels:
       - "com.docker.compose.service=homeassistant"

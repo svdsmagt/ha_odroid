@@ -6,11 +6,11 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     environment:
-      - WG_HOST=10.0.0.200
+      - WG_HOST=kastanjelaan.vandersmagt.net
       - PASSWORD_HASH=$$2y$$12$$PNsepUKoVauksZ64bIWiPeadl6A/jNPIlF.Ob7nicmDl/XjsYbB8y
       - WG_PORT=51820
       - WG_DEFAULT_ADDRESS=10.10.0.x
-      - WG_DEFAULT_DNS=10.0.0.1
+      - WG_DEFAULT_DNS=192.168.178.1
       - WG_ALLOWED_IPS=192.168.178.0/24, 10.0.0.0/24, 0.0.0.0/0
     volumes:
       - ./config:/etc/wireguard

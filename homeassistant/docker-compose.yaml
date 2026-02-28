@@ -1,4 +1,5 @@
 # https://www.home-assistant.io/installation/alternative/
+# port is 8123
 services:
   homeassistant:
     container_name: homeassistant
@@ -9,6 +10,11 @@ services:
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
     privileged: true
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    group_add:
+      - "dialout"  # Add dialout group (GID 20) for serial port access
+    # Use host network mode for better performance and compatibility with Home Assistant's discovery features
     network_mode: host
     environment:
       TZ: Europe/Amsterdam

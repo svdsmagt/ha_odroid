@@ -11,24 +11,23 @@ Door beide services te migreren naar overlay2, dwingen we deduplicatie af en win
 # 2. Voorbereiding (Cleanup)
 Voordat de migratie begint, moet er een buffer aan vrije ruimte zijn om commando's uit te voeren.
 
-
 ## Verwijder oude systeemlogs 
 
-  sudo journalctl --vacuum-time=1d
+    sudo journalctl --vacuum-time=1d
 
 ## Schoon de pakket-cache van Ubuntu op
 
-  sudo apt-get clean
-  sudo apt-get autoremove --purge
+    sudo apt-get clean
+    sudo apt-get autoremove --purge
 
 # 3. Stappenplan voor Migratie
 
 ## Stap 1: Volledige stop van services
 Docker heeft een 'socket' die de service automatisch herstart bij activiteit. Deze moet samen met de main service en containerd gestopt worden:
 
-  sudo systemctl stop docker.socket
-  sudo systemctl stop docker
-  sudo systemctl stop containerd
+    sudo systemctl stop docker.socket
+    sudo systemctl stop docker
+    sudo systemctl stop containerd
 
 Check de status met systemctl status docker om te bevestigen dat alles 'inactive (dead)' is.
 
@@ -37,9 +36,9 @@ Check de status met systemctl status docker om te bevestigen dat alles 'inactive
 Zorg dat de Docker daemon expliciet de juiste driver gebruikt.
 Maak of bewerk het bestand: sudo nano /etc/docker/daemon.json
 
-  {
-    "storage-driver": "overlay2"
-  }
+    {
+      "storage-driver": "overlay2"
+    }
 
 ## Stap 3: Containerd configureren (De missende schakel)
 
@@ -86,7 +85,11 @@ Driver check:
 
     docker info | grep Storage (Moet overlay2 zijn).
 
-Schijfruimte: df -h / (Het verbruik zou nu rond de 65-70% moeten liggen in plaats van 94%).
+Schijfruimte: 
+
+    df -h 
+    
+Het verbruik zou nu rond de 65-70% moeten liggen in plaats van 94%.
 
 # 5. Onderhoudstips voor 16GB Opslag
 

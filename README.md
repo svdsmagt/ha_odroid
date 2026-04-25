@@ -9,9 +9,12 @@ Controleer dat er genoeg ruimte is op de disk
 Er moet minimaal 30% vrij zijn
 
     cd homeassistant/
+    docker compose pull // duurt meer dan 10 minuten
+    docker compose up -d
+
+    cd wireguard
     docker compose pull
+    docker compose up -d
 
-Dit duurt een tijd > 10 minuten
 
-    docker compose up
 
